@@ -6,7 +6,10 @@ from sympy import EX
 import wikipedia
 import webbrowser
 import os
+import wolframalpha
 
+#--------------------------
+#application Paths and required urls 
 #--------------------------
 
 # chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
@@ -16,7 +19,7 @@ browser = webbrowser.get('chrome')
 engine = pyttsx3.init('sapi5') #sapi5 is Microsoft's speech API
 
 voices = engine.getProperty('voices') # There exists two voices. One male and female 
-engine.setProperty('voice',voices[1].id) # Note : while getting the properties its 'voices' and while setting the properties its 'voice'
+engine.setProperty('voice',voices[0].id) # Note : while getting the properties its 'voices' and while setting the properties its 'voice'
 
 chVoice = 1
 #---------------------------
@@ -35,10 +38,8 @@ def Greetings():
     else :
         speak("Good Evening")
 
-    if chVoice!= 0 :speak("Hello , I'm your Desktop Voice Assistant,Maarin. Please tell me how may I help you") 
-    else:
-        speak(
-            "Hello , I'm your Desktop Voice Assistant,Marin. Please tell me how may I help you")
+    speak("Hello , I'm your Desktop Voice Assistant,Eren. Please tell me how may I help you") 
+        
 
 #--------------------------
 
@@ -125,9 +126,10 @@ if __name__ == '__main__':
 
         elif 'door' in query:
             if ('check' or 'who is') in query:
+                url = '192.168.43.184'
                 try:
                     speak('Checking')
-                    webbrowser.open('')
+                    webbrowser.open(url)
                 except Exception as e:
                     speak('Camera is not working')
                     print(e)
@@ -140,11 +142,26 @@ if __name__ == '__main__':
             results = wikipedia.summary(query, sentences=2)
             print(results)
             speak(results)
+
         elif 'change your voice' in query:
             engine.setProperty('voice', voices[chVoice].id)
             chVoice = 1 if chVoice == 0 else 0
-            speak('Hello')
-        
+            speak("Hello , I'm your Desktop Voice Assistant,Marin. Please tell me how may I help you")
+
+        elif ('calculate' or 'weather')in query:
+            appId = 'JRGY87-5G9AXR6K5L'
+            client = wolframalpha.Client(appId)
+            indx = query.lower().split().index('calculate')
+            print(indx)
+            speak('helo')
+            query = query.split()[indx + 1:]
+            print(query)
+            res = client.query(''.join(query))
+            print(res)
+            answer = next(res.results).text
+            speak('The answer is '+ answer)
+            print(answer)
+
 
 
 

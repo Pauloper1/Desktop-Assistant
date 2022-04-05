@@ -6,22 +6,25 @@ from sympy import EX
 import wikipedia
 import webbrowser
 import os
+
+#--------------------------
+
 # chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
 chromePath = r'C:\Program Files\Google\Chrome\Application\chrome.exe%s'
 webbrowser.register('chrome',None,webbrowser.BackgroundBrowser(chromePath))
 browser = webbrowser.get('chrome')
 engine = pyttsx3.init('sapi5') #sapi5 is Microsoft's speech API
-# print(voices)
-# print(engine)
-# print(voices[0].id)
-# print(voices[1].id)
-# Female Voice isn't working. Even if I change the index to one.
-voices = engine.getProperty('voices') # There already exists two voices. One male and female 
-engine.setProperty('voice',voices[0].id)
+
+voices = engine.getProperty('voices') # There exists two voices. One male and female 
+engine.setProperty('voice',voices[1].id) # Note : while getting the properties its 'voices' and while setting the properties its 'voice'
+
 chVoice = 1
+#---------------------------
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
+
+#--------------------------
 
 def Greetings():
     hour = datetime.datetime.now().hour
@@ -32,11 +35,16 @@ def Greetings():
     else :
         speak("Good Evening")
 
-    speak("Hello , I'm your Desktop Voice Assistant. Please tell me how may I help you")
+    if chVoice!= 0 :speak("Hello , I'm your Desktop Voice Assistant,Maarin. Please tell me how may I help you") 
+    else:
+        speak(
+            "Hello , I'm your Desktop Voice Assistant,Marin. Please tell me how may I help you")
+
+#--------------------------
 
 def takeCommand():
     '''
-    This function converts the Voice given as input from the microphone to text 
+    This function converts the given speech as input from the microphone to text 
     '''
     r = sr.Recognizer()
     print(sr.Microphone)
@@ -56,6 +64,10 @@ def takeCommand():
         print('Cannot be recognized. Could you repeat it please')
         return "None"
     return query
+
+#--------------------------
+
+
 if __name__ == '__main__':
     Greetings()
     while True:
@@ -69,9 +81,9 @@ if __name__ == '__main__':
                 # webbrowser.get(r'C:\Program Files\Google\Chrome\Application\chrome.exe').open('youtube.com')
                 webbrowser.open_new_tab('youtube.com')
             elif 'google' in query:
-                browser.open('google.com')
+                webbrowser.open('google.com')
             elif 'instagram' in query:
-                browser.open('instagram.com')
+                webbrowser.open('instagram.com')
             elif 'code' in query:
                 speak('opening Vs code')
                 codePath = r'"C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\Code.exe"'
@@ -84,6 +96,14 @@ if __name__ == '__main__':
                 except Exception as e:
                     print(e)
                     speak('cannot open spotify')
+            elif 'facebook' in query:
+                try:
+                    speak('Opening facebook')
+                    webbrowser.open('facebook.com')
+                except Exception as e:
+                    print(e)
+                    speak('cannot open facebook')
+
 
         elif 'play music' in query:
             musicPath = r'C:\Users\admin\Music'
@@ -122,7 +142,7 @@ if __name__ == '__main__':
             speak(results)
         elif 'change your voice' in query:
             engine.setProperty('voice', voices[chVoice].id)
-            chVoice = 0
+            chVoice = 1 if chVoice == 0 else 0
             speak('Hello')
         
 

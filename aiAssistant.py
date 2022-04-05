@@ -134,29 +134,29 @@ if __name__ == '__main__':
                     speak('Camera is not working')
                     print(e)
 
-        elif ('who is' or 'what is') in query:
-            speak('Searching in Wikipedia')
-            query = query.replace('who is', '')
-            query = query.replace('what is', '')
-            print(query)
-            results = wikipedia.summary(query, sentences=2)
-            print(results)
-            speak(results)
+        # elif ('who is' or 'what is') in query:
+        #     speak('Searching in Wikipedia')
+        #     query = query.replace('who is', '')
+        #     query = query.replace('what is', '')
+        #     print(query)
+        #     results = wikipedia.summary(query, sentences=2)
+        #     print(results)
+        #     speak(results)
 
-        elif 'change your voice' in query:
+        elif ('change your voice' or 'character')in query:
             engine.setProperty('voice', voices[chVoice].id)
             chVoice = 1 if chVoice == 0 else 0
-            speak("Hello , I'm your Desktop Voice Assistant,Marin. Please tell me how may I help you")
+            speak("Hello , I'm your Desktop Voice Assistant,Maarin. Please tell me how may I help you")
 
-        elif ('calculate' or 'weather')in query:
+        elif ('calculate' or 'weather' or 'what is')in query:
             appId = 'JRGY87-5G9AXR6K5L'
             client = wolframalpha.Client(appId)
-            indx = query.lower().split().index('calculate')
-            print(indx)
-            speak('helo')
-            query = query.split()[indx + 1:]
-            print(query)
-            res = client.query(''.join(query))
+            # indx = query.lower().split().index('calculate')
+            # print(indx)
+            # speak('helo')
+            # query = query.split()[indx + 1:]
+            # print(query)
+            res = client.query(query)
             print(res)
             answer = next(res.results).text
             speak('The answer is '+ answer)

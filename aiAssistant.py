@@ -72,6 +72,8 @@ class queries:
         with sr.Microphone() as source:
             print('Listening...')
             # self.r.pause_threshold = 0.7  # Waits for 1sec until the statement is generated
+            # self.r.energy_threshold = 400
+            # self.r.adjust_for_ambient_noise(source)
             self.audio = self.r.listen(source)
             # print(audio)
 
@@ -180,3 +182,9 @@ class queries:
                 self.res = 'The answer is ' + self.res
             except:
                 self.res = 'Cannot process the query'
+        
+        elif 'exit the program' in self.query or 'exit' in self.query:
+            try:
+                quit()
+            except:
+                self.res = "Cannot process the query"

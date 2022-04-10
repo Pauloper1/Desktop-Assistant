@@ -27,8 +27,7 @@ window.resizable(False, False)
 
 
 #---------Title----------
-Title = Label(window, text='DESKTOP VOICE ASSISTANT',
-              font=("Times New Roman", 15, 'bold'))
+Title = Label(window, text='DESKTOP VOICE ASSISTANT',font=("Times New Roman", 15, 'bold'))
 Title.pack(pady=10)
 #---------Functions----------
 

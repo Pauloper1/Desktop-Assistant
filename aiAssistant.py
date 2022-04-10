@@ -1,4 +1,5 @@
 # This module makes the Assistance to speak
+from numpy import chararray
 import pyttsx3
 import datetime
 import speech_recognition as sr
@@ -42,7 +43,7 @@ class queries:
     #--------------------------
 
     def ChangeVoice(self, a):
-        if(a == 'Mikasa'):
+        if(a == 'Maarin'):
             self.chVoice = 1
         elif (a == 'Eren'):
             self.chVoice = 0
@@ -72,8 +73,6 @@ class queries:
         with sr.Microphone() as source:
             print('Listening...')
             # self.r.pause_threshold = 0.7  # Waits for 1sec until the statement is generated
-            # self.r.energy_threshold = 400
-            # self.r.adjust_for_ambient_noise(source)
             self.audio = self.r.listen(source)
             # print(audio)
 
@@ -167,8 +166,12 @@ class queries:
             try:
                 engine.setProperty('voice', voices[self.chVoice].id)
                 self.chVoice = 1 if self.chVoice == 0 else 0
-                self.speak(
-                    "Hello , I'm your Desktop VoiceAssistant,Maarin. Please tell me how may I helpyou")
+                characterV = ''
+                if self.chVoice == 0:
+                    characterV = 'Maarin'
+                else:
+                    characterV = 'Eren'
+                self.res = f"Hello , I'm your Desktop VoiceAssistant, Maarin. Please tell me how may I help you"
             except:
                 self.res = 'Cannot process the query'
 
@@ -182,9 +185,12 @@ class queries:
                 self.res = 'The answer is ' + self.res
             except:
                 self.res = 'Cannot process the query'
-        
-        elif 'exit the program' in self.query or 'exit' in self.query:
-            try:
-                quit()
-            except:
-                self.res = "Cannot process the query"
+
+        elif 'introduce yourself' in self.query or 'who are you' in self.query:
+            characterV = ''
+            if self.chVoice == 0:
+                characterV = 'Maarin'
+            else:
+                characterV = 'Eren'
+
+            self.res = f'Hello ,I am {characterV} , Desktop Voice Assistant, developed by Paul,Justin and Karthik'

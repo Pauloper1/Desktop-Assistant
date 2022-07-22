@@ -173,8 +173,10 @@ class queries:
 
         elif 'who is ' in self.query or 'calculate' in self.query or 'weather' in self.query or 'what is' in self.query:
             try:
-                
-                appId = 'JRGY87-5G9AXR6K5L'
+                # The queries for wolframalpha has a limit up to 2000 queries only.
+                # So if it gets exhausted, go to wolframalpha and get your appID.
+                # https: // products.wolframalpha.com/simple-api/documentation/ -> for appId
+                appId = 'Your appId'
                 client = wolframalpha.Client(appId)
                 res = client.query(self.query)
                 self.res = next(res.results).text

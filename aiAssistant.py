@@ -13,7 +13,7 @@ import wolframalpha
 #application Paths and required urls
 #--------------------------
 
-# chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
+
 chromePath = r'C:\Program Files\Google\Chrome\Application\chrome.exe%s'
 webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chromePath))
 browser = webbrowser.get('chrome')
@@ -107,8 +107,6 @@ class queries:
 
             if 'youtube' in self.query:
                 self.res = 'Opening Youtube'
-                # self.speak(self.res)
-                # webbrowser.get(r'C:\ProgramFiles\Google\Chrome\Application\chrome.exe')open('youtube.com')
 
                 webbrowser.open_new_tab('youtube.com')
             elif 'google' in self.query:
@@ -141,7 +139,6 @@ class queries:
             musicPath = r'C:\Users\admin\Music'
             songs = os.listdir(musicPath)
             print(songs)
-            # ran = random
             os.startfile(os.path.join(musicPath, songs[0]))
 
         elif 'wikipedia' in self.query:

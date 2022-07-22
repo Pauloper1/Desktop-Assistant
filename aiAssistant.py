@@ -69,12 +69,11 @@ class queries:
         This function converts the given speech as input from the microphone to text 
         '''
         self.r = sr.Recognizer()
-        print(sr.Microphone)
+        
         with sr.Microphone() as source:
             print('Listening...')
             # self.r.pause_threshold = 0.7  # Waits for 1sec until the statement is generated
             self.audio = self.r.listen(source)
-            # print(audio)
 
         try:
             print('Recognizing ..')
@@ -174,7 +173,7 @@ class queries:
 
         elif 'who is ' in self.query or 'calculate' in self.query or 'weather' in self.query or 'what is' in self.query:
             try:
-                print('Wolfarmalpha')
+                
                 appId = 'JRGY87-5G9AXR6K5L'
                 client = wolframalpha.Client(appId)
                 res = client.query(self.query)
